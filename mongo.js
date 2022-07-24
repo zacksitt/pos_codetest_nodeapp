@@ -5,7 +5,7 @@ var database = process.env.MONGO_DATABASE;
 
 let connect_db = async function(url = null, db_name = null){
     
-    url = "mongodb://" + process.env.MONGO_HOST+ ":" + process.env.MONGO_PORT + "/admin";
+    url = process.env.MONGODB_URL;
     const client = await MongoClient.connect(url, { useNewUrlParser: true ,useUnifiedTopology: true})
     .catch(err => { console.log(err); });
     if (!client) {
