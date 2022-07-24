@@ -48,6 +48,7 @@ authRoutes.use((req,res,next) => {
 })
 
 authRoutes.post("/invoices",invoiceCtrl.list);
+authRoutes.post("/invoice",invoiceCtrl.add);
 app.use('/auth', authRoutes)
 
 // catch 404 and forward to error handler
