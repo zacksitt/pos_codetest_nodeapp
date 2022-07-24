@@ -19,6 +19,10 @@ const invoiceScema = mongoose.Schema({
       type: Date,
       required:true
     },
+    total_amount:{
+      type: Number,
+      required:true
+    },
     products:{
       type: Object,
       required:true

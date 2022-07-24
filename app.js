@@ -10,6 +10,7 @@ global.io = require('socket.io');
 var ioredis = require('socket.io-redis');
 // var pool = require('./database');
 var indexRouter = require('./routes/index');
+const cors = require('cors');
 var app = express();
 
 // view engine setup
@@ -46,6 +47,9 @@ authRoutes.use((req,res,next) => {
     res.status(401).send('Authentication required.') // custom message
     // -----------------------------------------------------------------------
 })
+
+app.use(cors());
+app.use(express.json());
 
 authRoutes.post("/invoices",invoiceCtrl.list);
 authRoutes.post("/invoice",invoiceCtrl.add);

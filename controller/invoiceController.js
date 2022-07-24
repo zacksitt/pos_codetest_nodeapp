@@ -13,7 +13,7 @@ let list = async function(req,res){
         
         let data = await  invoiceMdl
                     .find(q,
-                    ['id','products','customer_name','saleperson_name'], // Columns to Return
+                    ['id','products','customer_name','saleperson_name','date','total_amount'], // Columns to Return
                     {
                         skip:skip, // Starting Row
                         limit:req.body.count, // Ending Row
@@ -50,6 +50,7 @@ let list = async function(req,res){
 let add = async function(req,res){
     
     try {
+
         console.log(req.body);
         
         let invoice = new invoiceMdl();
@@ -58,6 +59,7 @@ let add = async function(req,res){
         invoice.saleperson_name = req.body.saleperson_name;
         invoice.date = req.body.date;
         invoice.products = req.body.products;
+        invoice.total_amount = req.body.total_amount;
         invoice.created_at = new Date();
         invoice.updated_at = new Date();
         invoice.save();
@@ -67,7 +69,8 @@ let add = async function(req,res){
         //send response
         res.send({
             status: true,
-            "msg": "Inseted new data successfully."
+            "msg": "Inseted new data successfully.",
+            data:invoice
         });
         
     } catch (err) {
