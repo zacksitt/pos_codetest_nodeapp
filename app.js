@@ -52,6 +52,7 @@ app.use(cors());
 app.use(express.json());
 
 authRoutes.post("/invoices",invoiceCtrl.list);
+authRoutes.post("/invoice/report",invoiceCtrl.get_report_data);
 authRoutes.post("/invoice",invoiceCtrl.add);
 app.use('/auth', authRoutes)
 

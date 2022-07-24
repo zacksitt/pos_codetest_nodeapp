@@ -47,6 +47,48 @@ let list = async function(req,res){
     }
 }
 
+let get_report_data = async function(req,res){
+    
+    try {
+        let timerange = req.body.timerange;
+        console.log(timerange);
+        let group = {};
+        if(timerange == "daily"){
+            group = {_id:{$dateToString:{format:"%Y-%m-%d",date:"$date"}},count:{$sum:"$total_amount"}};
+        
+        }else if(timerange == "weekly"){
+
+            group = {_id:{$dateToString:{format:"%U %Y",date:"$date"}},weekNumber:{$first:{$dateToString:{format:"%U",date:"$date"}}},count:{$sum:"$total_amount"}};
+
+        }else{
+            group = {_id:{$dateToString:{format:"%m",date:"$date"}},createdDate:{$first:{$dateToString:{format:"%Y-%m-%d",date:"$date"}}},count:{$sum:"$total_amount"}};
+        }
+
+        let data = await invoiceMdl.aggregate([
+          
+            {
+                $group:group
+                //$group:{_id:{$dateToString:{format:"%Y-%m-%d",date:"$date"}},count:{$sum:"$total_amount"}}
+                //$group:{_id:{$dayOfWeek:"$date"},count:{$sum:"$total_amount"}}
+            },
+            {
+                $sort:{_id:1}
+            }
+        ]);
+        
+        res.send({
+
+            status: true,
+            data:data
+        });
+        
+    } catch (err) {
+    
+        res.status(500).send(err);
+        console.error(err);
+    }
+}
+
 let add = async function(req,res){
     
     try {
@@ -82,5 +124,6 @@ let add = async function(req,res){
 }
 module.exports = {
     list,
-    add
+    add,
+    get_report_data
 }
