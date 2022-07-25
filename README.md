@@ -1,5 +1,14 @@
 # pos_codetest_nodeapp
 
+#Getting Start Wiht nodejs
+
+### `pm2 start ecosystem.confit.js --env production`
+Run node process with PM2 process manager
+
+
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
+
 POS Restful API
 
 Domain : http://api.my-cmss.com
